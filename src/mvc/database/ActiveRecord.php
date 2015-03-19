@@ -1,6 +1,7 @@
 <?php
 class ActiveRecord {
     public $columns = array();
+    public $columnsDB = array();
     public $isNewRecord = true;
     public $dbConnection;
     public $metaData;
@@ -19,16 +20,39 @@ class ActiveRecord {
     protected function getMetaData(){
         $result = DBConnection::getInstance()->getCommand()->execute("SHOW FULL COLUMNS FROM ".$this->getTableName());
         foreach ($result as $row){
-        	$this->columns[$row["Field"]] = null;
+        	$field = $this->changeNameField($row["Field"]);
+        	$this->columns[$field] = null;
+        	$this->columnsDB[$row["Field"]] = null;
         	if($row["Key"] === "PRI"){
         		$this->primaryKey = $row["Field"];
         	}
         }
-
+    }
+    
+    private function changeNameField($name)
+    {
+    	$flag = false;
+    	$result = "";
+    	$nameArray = explode("_",$name);
+    	if(count($nameArray)>1)
+    	{
+    		foreach ($nameArray as $item)
+    		{
+    			if($flag){
+    				$result .= ucfirst(strtolower($item));
+    			}else{
+    				$result .= $item;
+    			}
+    			$flag = true;
+    		}
+    	}else{
+		return $name;
+    	}
+    	return $result;
     }
     
     public function findAll($conditions = ''){
-    	$result = DBConnection::getInstance()->getCommand()->select($this->columns,$this->getTableName(),$conditions);
+    	$result = DBConnection::getInstance()->getCommand()->select($this->columnsDB,$this->getTableName(),$conditions);
     	return $result;
     }
 
@@ -42,18 +66,19 @@ class ActiveRecord {
 
     public function setAttributes($attributesArray){
     	foreach ($attributesArray as $column => $value){
-    		if($column == $this->primaryKey && $value != '' && $value != null){
+    		$field = $this->changeNameField($column);
+    		if($field == $this->primaryKey && $value != '' && $value != null){
     			$this->isNewRecord = false;
     		}
-			$this->$column = $value;
+			$this->$field = $value;
 		}
     }
 
     public function save(){
 		if($this->isNewRecord()){
-		return DBConnection::getInstance()->getCommand()->insert($this->columns,$this->getTableName(),$this->primaryKey);
+		return DBConnection::getInstance()->getCommand()->insert($this->columnsDB,$this->columns,$this->getTableName(),$this->primaryKey);
 		}else{
-		return DBConnection::getInstance()->getCommand()->update($this->columns,$this->getTableName(),$this->primaryKey);
+		return DBConnection::getInstance()->getCommand()->update($this->columnsDB,$this->columns,$this->getTableName(),$this->primaryKey);
 		}
     }
 
@@ -62,11 +87,11 @@ class ActiveRecord {
     }
 
     public function find($conditions){
-		$result = DBConnection::getInstance()->getCommand()->select($this->columns,$this->getTableName(),$conditions);
+		$result = DBConnection::getInstance()->getCommand()->select($this->columnsDB,$this->getTableName(),$conditions);
 		if(count($result) == 1){
 			$this->setAttributes($result[0]);
 		}else if(count($result) != 0){
-			throw new Exception('ERROR: Existe m&aactute; de una coincidencia en con la condici&oacute;n: '.$conditions.' Se recomienda utilizar el m&eacute;todo findAll');
+			throw new Exception('ERROR: Existe m&aacute;s de una coincidencia en la condici&oacute;n: '.$conditions.' Se recomienda utilizar el m&eacute;todo findAll');
 		}
     }
 

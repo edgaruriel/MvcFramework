@@ -12,17 +12,17 @@ class LogInController extends MvcController{
 		$modelUser->login($data["user"], $data["password"]);
 		
 		if(Authentication::getInstance()->isLogged()){
-			$url = "Location:../User/listUser";
+			$url = "../User/listUser";
 			$this->redirect($url);
 		}else{
-			$url = "Location:../LogIn/logIn";
+			$url = "../LogIn/logIn";
 			$this->redirect($url);
 		}
 	}
 	
 	public function logOutAction(){
 		Authentication::getInstance()->logout();
-		$url = "Location:../LogIn/logIn";
+		$url = "../LogIn/logIn";
 		$this->redirect($url);
 	}
 }

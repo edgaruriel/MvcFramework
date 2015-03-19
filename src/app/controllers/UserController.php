@@ -18,7 +18,7 @@ class UserController extends MvcController{
 		$modelUser = new User();
 		$modelUser->setAttributes($data);
 		$modelUser->add();
-		$this->redirect("Location:../User/listUser");
+		$this->redirect("../User/listUser");
 	}
 	
 	function deleteUserAction(){
@@ -26,7 +26,7 @@ class UserController extends MvcController{
 		$modelUser = new User();
 		$modelUser->setAttributes($data);
 		$modelUser->deleteOneByPrimaryKey();
-		$this->redirect("Location:../User/listUser");
+		$this->redirect("../User/listUser");
 	}
 	
 	function editUserAction(){
@@ -43,7 +43,7 @@ class UserController extends MvcController{
 		$modelUser->setAttributes($data);
 		
 		$modelUser->update();
-		$this->redirect("Location:../User/listUser");
+		$this->redirect("../User/listUser");
 	}
 	
 }
