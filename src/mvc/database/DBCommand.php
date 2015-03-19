@@ -13,31 +13,34 @@ class DBCommand {
     	return $this->connection->getPdo()->lastInsertId($name);
     }
 
-    public function insert($columns,$tableName, $primaryKey){
+    public function insert($columns,$values,$tableName, $primaryKey){
     	unset($columns[$primaryKey]);
+    	unset($values[$primaryKey]);
     	$query = '';
     	$keys = array_keys($columns);
     	$query = implode(",", $keys);
     	
     	$keyValues = Array();
-    	foreach ($columns as $key=>$value){
+    	foreach ($values as $key=>$value){
     			array_push($keyValues, "'".$value."'");
     	}
     	
-     	$values = implode(",", $keyValues);
-    	$sentence = $this->connection->getPdo()->prepare('INSERT INTO '.$tableName.' ('.$query.') VALUES ('.$values.')');
+     	$valuesAux = implode(",", $keyValues);
+    	$sentence = $this->connection->getPdo()->prepare('INSERT INTO '.$tableName.' ('.$query.') VALUES ('.$valuesAux.')');
     	$sentence->execute();
     	return $this->lastInsertId();
-    	
     }
 
-    public function update($columns,$tableName, $primaryKey){
-    	$primaryKeyValue = $columns[$primaryKey];
+    public function update($columns,$values,$tableName, $primaryKey){
+    	$primaryKeyValue = $values[$primaryKey];
 		unset($columns[$primaryKey]);
+		unset($values[$primaryKey]);
     	$query = '';
 		$arrayAux = Array();
     	foreach ($columns as $column => $value){
-    		array_push($arrayAux, $column." = '".$value."'");
+    		$field = $this->changeNameField($column);
+    		$valueAux = $values[$field];
+    		array_push($arrayAux, $column." = '".$valueAux."'");
     	}
     	$query = implode(",", $arrayAux);
     	$sentence = $this->connection->getPdo()->prepare('UPDATE '.$tableName.' SET '.$query.' WHERE '.$primaryKey.' = '.$primaryKeyValue);
@@ -75,4 +78,27 @@ class DBCommand {
     	$sentence = $this->connection->getPdo()->prepare('DELETE FROM '.$tableName.' WHERE '.$primaryKey.' = '.$value);
     	$sentence->execute();
     }
+    
+    private function changeNameField($name)
+    {
+    	$flag = false;
+    	$result = "";
+    	$nameArray = explode("_",$name);
+    	if(count($nameArray)>1)
+    	{
+    		foreach ($nameArray as $item)
+    		{
+    			if($flag){
+    				$result .= ucfirst(strtolower($item));
+    			}else{
+    				$result .= $item;
+    			}
+    			$flag = true;
+    		}
+    	}else{
+    		return $name;
+    	}
+    	return $result;
+    }
+    
 } 

@@ -77,7 +77,7 @@ abstract class MvcController{
 	}
 	
 	public function redirect($url){
-		header($url);
+		header("Location:".$url);
 	}
 
 	public function render($view,$params = array()){

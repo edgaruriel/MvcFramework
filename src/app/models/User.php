@@ -37,8 +37,8 @@ class User extends ActiveRecord{
 	}
 	
 	public function login($user,$password){
-		$this->find("userName ='".$user."' AND password = '".$password."'");
-		if($this->userName == $user && $this->password == $password){
+		$this->find("username ='".$user."' AND password = '".$password."'");
+		if($this->username == $user && $this->password == $password){
 			Authentication::getInstance()->login($this->typeUser);
 		}
 	}
