@@ -5,7 +5,8 @@ class UserController extends MvcController{
  		$modelUser = new User();
  		$UserList = new UserIndex();
  		$userArray = $modelUser->findAllUser();
-		$UserList->listUser($userArray);
+        $this->render("../views/user/listUser.php",array('users' => $userArray));
+		//$UserList->listUser($userArray);
 	}
 	
 	function newUserAction(){

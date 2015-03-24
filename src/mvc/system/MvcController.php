@@ -80,6 +80,15 @@ abstract class MvcController{
 		header("Location:".$url);
 	}
 
-	
+	public function render($view,$params = array()){
+
+        if(is_array($params) && !is_null($params)){
+            extract($params);
+        }
+
+        ob_start();
+        require($view);
+        ob_clean();
+    }
 	
 }
