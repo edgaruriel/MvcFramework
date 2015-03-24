@@ -14,7 +14,14 @@ class ActiveRecord {
     }
 
     protected function getTableName(){
-        return strtolower(get_class($this));
+    	$parts = preg_split('/(?=[A-Z])/', get_class($this), -1, PREG_SPLIT_NO_EMPTY);
+       if(count($parts) >1){
+       		$name = '';
+       		return strtolower(implode("_", $parts));
+       }else{
+       	return strtolower(get_class($this));
+       }
+      
     }
 
     protected function getMetaData(){

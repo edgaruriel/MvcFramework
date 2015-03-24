@@ -31,7 +31,7 @@ class AccessController{
 									
 						),
 				'authorized'=>Array(//type users
-							User::$typeUserArray["admin"]=>Array( //controller
+							TypeUser::$typeUserArray["admin"]=>Array( //controller
 														'User'=>Array(//actions
 																	'newUser',
 																	'addUser',
@@ -49,7 +49,7 @@ class AccessController{
 				"host" => "localhost",
 				"username" => "root",
 				"password" => "root",
-				"schema" => "mvcframework",
+				"schema" => "mvc",
 				"dbtype"=> "mysql"
 				);
 	}

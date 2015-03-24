@@ -9,8 +9,12 @@ class LogInController extends MvcController{
 	public function AuthenticationAction(){
 		$data = $this->params;
 		$modelUser = new User();
-		$modelUser->login($data["user"], $data["password"]);
+		$modelUser->login($data["user"], sha1($data["password"]));
 		
+// 		print_r($modelUser->columns);
+// 		echo '\n';
+// 		print_r($modelUser->columnsDB);
+// 		exit();
 		if(Authentication::getInstance()->isLogged()){
 			$url = "../User/listUser";
 			$this->redirect($url);

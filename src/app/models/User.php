@@ -1,14 +1,29 @@
 <?php
 class User extends ActiveRecord{
-	public static $ID = 0;
+/*	public static $ID = 0;
 	public static  $FIRST_NAME = 1;
 	public static  $LAST_NAME = 2;
 	public static  $USER = 3;
 	public static  $PASSWORD = 4;
 	public static  $TYPE_USER = 5;
+*/
+
+	public $typeUser = null;
 	
-	public static $typeUserArray = Array('admin'=>1, 'employee'=>2, 'manager'=>3);
-	
+	/**
+	 * @return the $typeUser
+	 */
+	public function getTypeUser() {
+		return $this->typeUser;
+	}
+
+	/**
+	 * @param field_type $typeUser
+	 */
+	public function setTypeUser($typeUser) {
+		$this->typeUser = $typeUser;
+	}
+
 	public function add(){
 		$id = $this->save();
 	}
@@ -38,8 +53,12 @@ class User extends ActiveRecord{
 	
 	public function login($user,$password){
 		$this->find("username ='".$user."' AND password = '".$password."'");
-		if($this->username == $user && $this->password == $password){
-			Authentication::getInstance()->login($this->typeUser);
+		$typeUser = new TypeUser();
+		$typeUser->finOneById($this->typeUserId);
+		$this->setTypeUser($typeUser);
+
+		if($this->username == $user && $this->password == $password && $this->getTypeUser()->id == TypeUser::$typeUserArray["admin"]){
+			Authentication::getInstance()->login($this->getTypeUser()->id);
 		}
 	}
 }

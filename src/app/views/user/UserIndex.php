@@ -24,7 +24,7 @@ class UserIndex{
 				echo '<label>'.$user->lastName.'</label>';
 				echo '</td>';
 				echo '<td>';
-				echo '<label>'.$user->userName.'</label>';
+				echo '<label>'.$user->username.'</label>';
 				echo '</td>';
 				echo '<td>';
 				echo '<label>'.$user->password.'</label>';
