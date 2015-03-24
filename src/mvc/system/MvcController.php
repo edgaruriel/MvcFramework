@@ -82,13 +82,20 @@ abstract class MvcController{
 
 	public function render($view,$params = array()){
 
+        $file = $this->getPath($view);
         if(is_array($params) && !is_null($params)){
             extract($params);
         }
 
         ob_start();
-        require($view);
-        ob_clean();
+        require($file);
+        echo ob_get_clean();
+    }
+
+    public function getPath($view){
+        $controller = WebApplication::getInstance()->getUrlManager()->getController();
+        return dirname(__FILE__)."/../../app/views/".$controller."/".$view.".php";
+
     }
 	
 }
