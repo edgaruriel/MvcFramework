@@ -88,6 +88,7 @@ abstract class MvcController{
         }
 
         ob_start();
+        include dirname(__FILE__)."/../../app/views/Header.php";
         require($file);
         echo ob_get_clean();
     }
