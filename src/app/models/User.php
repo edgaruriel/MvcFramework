@@ -44,9 +44,9 @@ class User extends ActiveRecord{
 		$users = Array();
 		$rows = $this->findAll();
 		foreach ($rows as $row){
-			$modelUser = new User();
-			$modelUser->setAttributes($row);
-			array_push($users, $modelUser);
+			$model = new User();
+			$model->setAttributes($row);
+			array_push($users, $model);
 		}
 		return $users;
 	}

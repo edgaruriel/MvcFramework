@@ -39,7 +39,8 @@ class AccessController{
 																	'deleteUser',
 																	'editUser',
 																	'updateUser'
-																)
+																),
+                                                        'Movie'=>Array('listMovies')
 									)
 						));
 	}
