@@ -8,17 +8,11 @@
     <link rel="stylesheet" type="text/css" href="../../../../public/css/main.css" media="screen" />
 </head>
 <body>
-<div class="nav">
-	<a href="../employee/index.php" class="nav-button">Catalogo de usuarios</a>
-	<a href="../movie/index.php" class="nav-button">Catalogo de peliculas</a>
-	<a href="../cash/index.php" class="nav-button">Corte de caja del d&iacute;a</a>
-	<a href="../../../services/LoginService.php?logOut" class="exit-button right"><span class="icon fa-off"></a>
-</div>
 
    <div class="container center">
    <div class="header">Nueva Pelicula</div>
 
-            <form action="../Movie/addMovie" id="form" name="form" method="post" enctype="multipart/form-data" class="form-group">
+            <form action="../Movie/updateMovie" id="form" name="form" method="post" enctype="multipart/form-data" class="form-group">
                     <label ><span>Titulo: </span></label><input type="text" id="title" name="title" value="<?php echo (isset($_POST["title"]))? $_POST["title"]: ""?>"/>
                     
                     <label ><span>Formato: </span></label><input type="text" id="format" name="format" value="<?php echo (isset($_POST["format"]))? $_POST["format"]: ""?>"/>
@@ -44,7 +38,7 @@
                     <label ><span>C&oacute;digo: </span></label><input type="text" id="code" name="code" value="<?php echo (isset($_POST["code"]))? $_POST["title"]: ""?>"/>
 
                     <label ><span>Genero: </span></label>
-					<select id="gender" name="gender">
+					<select id="genderId" name="genderId">
                     <option value="">Seleccione un g&eacute;nero</option>
                     <?php foreach ($genders as $gender):?>
                     <?php if(isset($_POST["gender"]) && $_POST["gender"] == $gender->id):?>
@@ -57,8 +51,10 @@
                     </select>
                     <br>
                     <br>
+                <input type="hidden" id="status" name="status" value="1">
+                <input type="hidden" id="rentedUnits" name="rentedUnits" value="0">
                 <input type="submit" name="newBtn" id="newBtn" value="Agregar" class="right verde">
-                <a id="btn_cancelar" value="Cancelar" href="index.php" class="button left azul"><span class="icon fa-times"></span>Cancelar</a>
+                <a id="btn_cancelar" value="Cancelar" href="../Movie/listMovies" class="button left azul"><span class="icon fa-times"></span>Cancelar</a>
                 <br>
                 <br>
                 <br>

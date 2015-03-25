@@ -10,7 +10,7 @@ class MovieController extends MvcController{
     function newMovieAction(){
         $model = new Gender();
         $genders = $model->findAllGenders();
-        $this->render("new",array('genders'=> $genders));
+        $this->render("new",array('genders'=> $genders),"HeaderAdmin","admin");
     }
 
     function addMovieAction(){
@@ -18,23 +18,25 @@ class MovieController extends MvcController{
         $model = new Movie();
         $model->setAttributes($data);
         $model->add();
-        $this->redirect("../User/listUser");
+        $this->redirect("../Movie/listMovies");
     }
 
     function deleteMovieAction(){
         $data = $this->params;
         $model = new Movie();
-        $model->setAttributes($data);
+        $model->finOneById($data["id"]);
         $model->status = false;
         $model->update();
-        $this->redirect("../User/listUser");
+        $this->redirect("../Movie/listMovies");
     }
 
     function editMovieAction(){
         $data = $this->params;
         $model = new Movie();
         $model->finOneById($data["id"]);
-        $this->render("edit",array('movie' => $model));
+        $modelGender = new Gender();
+        $genders = $modelGender->findAllGenders();
+        $this->render("edit",array('movie' => $model,'genders'=>$genders),"HeaderAdmin", "admin");
     }
 
     function updateMovieAction(){
@@ -43,6 +45,6 @@ class MovieController extends MvcController{
         $model->setAttributes($data);
 
         $model->update();
-        $this->redirect("../User/listUser");
+        $this->redirect("../Movie/listMovies");
     }
 }

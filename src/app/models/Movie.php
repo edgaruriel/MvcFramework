@@ -41,7 +41,7 @@ class Movie extends ActiveRecord{
 
     public function findAllMovies(){
         $movies = Array();
-        $rows = $this->findAll();
+        $rows = $this->findAll("status = 1");
         foreach ($rows as $row){
             $model = new Movie();
             $model->setAttributes($row);
