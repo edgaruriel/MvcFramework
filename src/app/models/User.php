@@ -46,6 +46,11 @@ class User extends ActiveRecord{
 		foreach ($rows as $row){
 			$modelUser = new User();
 			$modelUser->setAttributes($row);
+			
+			$typeUser2 = new TypeUser();
+			$typeUser2->finOneById($modelUser->typeUserId);
+			$modelUser->setTypeUser($typeUser2);
+			
 			array_push($users, $modelUser);
 		}
 		return $users;

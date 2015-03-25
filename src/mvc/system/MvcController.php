@@ -80,7 +80,7 @@ abstract class MvcController{
 		header("Location:".$url);
 	}
 
-	public function render($view,$params = array()){
+	public function render($view,$params = array(), $renderHeder = null){
 
         $file = $this->getPath($view);
         if(is_array($params) && !is_null($params)){
@@ -88,7 +88,9 @@ abstract class MvcController{
         }
 
         ob_start();
-        include dirname(__FILE__)."/../../app/views/Header.php";
+        if($renderHeder != null)
+        	include dirname(__FILE__)."/../../app/views/".$renderHeder.".php";
+        
         require($file);
         echo ob_get_clean();
     }

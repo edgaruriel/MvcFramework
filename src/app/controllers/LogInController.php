@@ -2,8 +2,9 @@
 class LogInController extends MvcController{
 	
 	public function logInAction(){
-		$login = new LogIn();
-		$login->initLogIn();
+// 		$login = new LogIn();
+// 		$login->initLogIn();
+		$this->render("LogIn",array());
 	}
 	
 	public function AuthenticationAction(){
