@@ -24,7 +24,7 @@
 </div>
 <div class="autores">
 <h3>Desarrollado por</h3>
-<h3>Edgar Rodriguez - Eddie Paredes - Jaime Negrete - José Brice&ntilde;o</h3>
+<h3>Edgar Rodriguez - Eddie Paredes - Jaime Negrete</h3>
 </div>
 </body>
 </html>
