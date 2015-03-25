@@ -40,7 +40,8 @@ class AccessController{
 																	'editUser',
 																	'updateUser'
 																),
-                                                        'Movie'=>Array('*')
+                                                        'Movie'=>Array('*'),
+														'Index'=>Array('indexAdmin')
 									)
 						));
 	}

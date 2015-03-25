@@ -46,6 +46,11 @@ class User extends ActiveRecord{
 		foreach ($rows as $row){
 			$model = new User();
 			$model->setAttributes($row);
+			
+			$typeUser = new TypeUser();
+			$typeUser->finOneById($model->typeUserId);
+			$model->setTypeUser($typeUser);
+			
 			array_push($users, $model);
 		}
 		return $users;
@@ -57,7 +62,8 @@ class User extends ActiveRecord{
 		$typeUser->finOneById($this->typeUserId);
 		$this->setTypeUser($typeUser);
 
-		if($this->username == $user && $this->password == $password && $this->getTypeUser()->id == TypeUser::$typeUserArray["admin"]){
+		//$this->getTypeUser()->id == TypeUser::$typeUserArray["admin"]
+		if($this->username == $user && $this->password == $password){
 			Authentication::getInstance()->login($this->getTypeUser()->id);
 		}
 	}

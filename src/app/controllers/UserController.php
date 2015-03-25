@@ -3,9 +3,9 @@ class UserController extends MvcController{
 	
 	function listUserAction(){
  		$modelUser = new User();
- 		$UserList = new UserIndex();
+ 		//$UserList = new UserIndex();
  		$userArray = $modelUser->findAllUser();
-        $this->render("listUser",array('users' => $userArray));
+        $this->render("index",array('users' => $userArray),"HeaderAdmin", "admin");
 		//$UserList->listUser($userArray);
 	}
 	

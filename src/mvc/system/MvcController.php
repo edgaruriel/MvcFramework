@@ -80,23 +80,33 @@ abstract class MvcController{
 		header("Location:".$url);
 	}
 
-	public function render($view,$params = array()){
-
-        $file = $this->getPath($view);
+	public function render($view,$params = array(), $renderHeader = null, $path = null){
+		$file = "";
+		if($path != null){
+			$file = $this->getPath($view, $path);
+		}else{
+			$file = $this->getPath($view);
+		}
+       
         if(is_array($params) && !is_null($params)){
             extract($params);
         }
 
         ob_start();
-        include dirname(__FILE__)."/../../app/views/Header.php";
+        if($renderHeader != null)
+        	include dirname(__FILE__)."/../../app/views/".$renderHeader.".php";
+        
         require($file);
         echo ob_get_clean();
     }
 
-    public function getPath($view){
+    public function getPath($view,$path = null){
         $controller = WebApplication::getInstance()->getUrlManager()->getController();
-        return dirname(__FILE__)."/../../app/views/".$controller."/".$view.".php";
-
+        if($path != null){
+        	return dirname(__FILE__)."/../../app/views/".$path."/".$controller."/".$view.".php";
+        }else{
+        	return dirname(__FILE__)."/../../app/views/".$controller."/".$view.".php";
+        }
     }
 	
 }
