@@ -41,6 +41,7 @@ class AccessController{
 																	'updateUser'
 																),
                                                         'Movie'=>Array('*'),
+                                                        'Cash'=>Array('*'),
 														'Index'=>Array('indexAdmin')
 									)
 						));
