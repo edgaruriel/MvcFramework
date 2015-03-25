@@ -46,13 +46,13 @@
                     <label ><span>Genero: </span></label>
 					<select id="gender" name="gender">
                     <option value="">Seleccione un g&eacute;nero</option>
-                    <?php foreach ($allGender as $gender):?>
-                    <?php if(isset($_POST["gender"]) && $_POST["gender"] == $gender->getId()):?>
-                    <option value="<?php echo $gender->getId();?>" selected="selected"><?php echo $gender->getName();?></option>
+                    <?php foreach ($genders as $gender):?>
+                    <?php if(isset($_POST["gender"]) && $_POST["gender"] == $gender->id):?>
+                    <option value="<?php echo $gender->id;?>" selected="selected"><?php echo $gender->name;?></option>
                     <?php 
                     continue;
                     endif;?>
-                    <option value="<?php echo $gender->getId();?>"><?php echo $gender->getName();?></option>
+                    <option value="<?php echo $gender->id;?>"><?php echo $gender->name;?></option>
 					<?php endforeach;;?>                    
                     </select>
                     <br>

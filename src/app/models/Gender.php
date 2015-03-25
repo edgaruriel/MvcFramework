@@ -13,7 +13,7 @@ class Gender extends ActiveRecord{
         foreach ($rows as $row){
             $model = new Gender();
             $model->setAttributes($row);
-            array_push($genders, $modelUser);
+            array_push($genders, $model);
         }
         return $genders;
     }

@@ -19,7 +19,7 @@
 	<div class="header">Peliculas</div>
         <div>
             <div class="actions">
-	            <a href="new.php" class="button right verde"><span class="icon fa-plus"></span>Agregar Pelicula</a>
+	            <a href="newMovie" class="button right verde"><span class="icon fa-plus"></span>Agregar Pelicula</a>
 	            <a href="../index.php" class="button left azul"><span class="icon fa-home"></span>Regresar</a>
             </div>
             <table style="" border="1">
@@ -40,7 +40,7 @@
                             <td><?php echo utf8_encode($movie->title);?></td>
                             <?php $available = ($movie->totalUnits) - ($movie->rentedUnits);?>
                             <td><?php echo $available;?></td>
-                            <td><?php echo '$'.$movie->price;?></td>
+                            <td><?php echo '$'.number_format($movie->price,2);?></td>
                             <td><?php echo utf8_encode($movie->getGender()->name);?></td>
                             <td>
                                 <a href="edit.php?idMovie=<?php echo $movie->id;?>" class="s-button verde"><span class="s-icon fa-edit"></span></a>
