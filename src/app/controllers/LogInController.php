@@ -4,7 +4,7 @@ class LogInController extends MvcController{
 	public function logInAction(){
 // 		$login = new LogIn();
 // 		$login->initLogIn();
-		$this->render("LogIn",array());
+		$this->render("logIn",array());
 	}
 	
 	public function AuthenticationAction(){
@@ -12,12 +12,17 @@ class LogInController extends MvcController{
 		$modelUser = new User();
 		$modelUser->login($data["user"], sha1($data["password"]));
 		
-// 		print_r($modelUser->columns);
-// 		echo '\n';
-// 		print_r($modelUser->columnsDB);
-// 		exit();
 		if(Authentication::getInstance()->isLogged()){
-			$url = "../User/listUser";
+			//$url = "../User/listUser";
+			$url = "";
+			if($modelUser->getTypeUser()->id == TypeUser::$typeUserArray["admin"]){
+				$url = "../Index/indexAdmin";
+				//$this->redirect($url);
+			}else if($modelUser->getTypeUser()->id == TypeUser::$typeUserArray["employee"]){
+				$url = "../Index/indexEmployee";
+			}else{
+				$url = "../LogIn/logOut";
+			}
 			$this->redirect($url);
 		}else{
 			$url = "../LogIn/logIn";

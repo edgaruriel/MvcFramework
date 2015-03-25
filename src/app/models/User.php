@@ -62,7 +62,8 @@ class User extends ActiveRecord{
 		$typeUser->finOneById($this->typeUserId);
 		$this->setTypeUser($typeUser);
 
-		if($this->username == $user && $this->password == $password && $this->getTypeUser()->id == TypeUser::$typeUserArray["admin"]){
+		//$this->getTypeUser()->id == TypeUser::$typeUserArray["admin"]
+		if($this->username == $user && $this->password == $password){
 			Authentication::getInstance()->login($this->getTypeUser()->id);
 		}
 	}

@@ -4,7 +4,7 @@ class MovieController extends MvcController{
     function listMoviesAction(){
         $model = new Movie();
         $movies = $model->findAllMovies();
-        $this->render("index",array('movies' => $movies));
+        $this->render("index",array('movies' => $movies), "HeaderAdmin", "admin");
     }
 
     function newMovieAction(){
