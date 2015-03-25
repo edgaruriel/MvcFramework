@@ -37,14 +37,14 @@
                     <?php foreach($movies as $movie):?>
                         <tr>
                             <td><?php echo $movie->id;?></td>
-                            <td><?php echo utf8_encode($movie->getTitle());?></td>
-                            <?php $available = ($movie->getTotalUnits()) - ($movie->getRentedUnits());?>
+                            <td><?php echo utf8_encode($movie->title);?></td>
+                            <?php $available = ($movie->totalUnits) - ($movie->rentedUnits);?>
                             <td><?php echo $available;?></td>
-                            <td><?php echo '$'.$movie->getPrice();?></td>
-                            <td><?php echo utf8_encode($movie->getGender()->getName());?></td>
+                            <td><?php echo '$'.$movie->price;?></td>
+                            <td><?php echo utf8_encode($movie->getGender()->name);?></td>
                             <td>
-                                <a href="edit.php?idMovie=<?php echo $movie->getId();?>" class="s-button verde"><span class="s-icon fa-edit"></span></a>
-                                <a href="../../../services/MovieService.php?action=delete&idMovie=<?php echo $movie->getId();?>" class="s-button rojo"><span class="s-icon fa-trash"></span></a>
+                                <a href="edit.php?idMovie=<?php echo $movie->id;?>" class="s-button verde"><span class="s-icon fa-edit"></span></a>
+                                <a href="../../../services/MovieService.php?action=delete&idMovie=<?php echo $movie->id;?>" class="s-button rojo"><span class="s-icon fa-trash"></span></a>
                             </td>
                         </tr>
                     <?php endforeach;?>
