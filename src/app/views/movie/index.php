@@ -34,9 +34,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($allMovie as $movie):?>
+                    <?php foreach($movies as $movie):?>
                         <tr>
-                            <td><?php echo $movie->getId();?></td>
+                            <td><?php echo $movie->id;?></td>
                             <td><?php echo utf8_encode($movie->getTitle());?></td>
                             <?php $available = ($movie->getTotalUnits()) - ($movie->getRentedUnits());?>
                             <td><?php echo $available;?></td>

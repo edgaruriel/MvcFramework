@@ -40,7 +40,7 @@ class AccessController{
 																	'editUser',
 																	'updateUser'
 																),
-                                                        'Movie'=>Array('listMovies')
+                                                        'Movie'=>Array('*')
 									)
 						));
 	}

@@ -1,5 +1,5 @@
 <?php
-class Gender{
+class Gender extends ActiveRecord{
 	
 	public static $genderArray = Array('ACCION'=>1,'COMEDIA'=>2,'TERROR'=>3,'SUSPENSO'=>4,'DRAMA'=>5,'INFANTIL'=>6);
 

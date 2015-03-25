@@ -46,9 +46,9 @@ class Movie extends ActiveRecord{
             $model = new Movie();
             $model->setAttributes($row);
             $gender = new Gender();
-            $gender->finOneById($row->genderId);
+            $gender->finOneById($model->genderId);
             $model->setGender($gender);
-            array_push($movies, $modelUser);
+            array_push($movies, $model);
         }
         return $movies;
     }
