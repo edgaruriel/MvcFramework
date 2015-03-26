@@ -45,6 +45,14 @@ class AccessController{
 														'Index'=>Array('indexAdmin')
 									),
 							TypeUser::$typeUserArray["EMPLOYEE"]=>Array(
+														'Client'=>Array(//actions
+																	'newClient',
+																	'addClient',
+																	'listClient',
+																	'deleteClient',
+																	'editClient',
+																	'updateClient'
+																),
 														'Index'=>Array('indexEmployee'),
 														'RentedMovie'=>Array('*')
 									)
@@ -55,7 +63,7 @@ class AccessController{
 		return Array(
 				"host" => "localhost",
 				"username" => "root",
-				"password" => "root",
+				"password" => "",
 				"schema" => "mvc",
 				"dbtype"=> "mysql"
 				);
