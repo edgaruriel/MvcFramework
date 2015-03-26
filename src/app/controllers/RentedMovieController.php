@@ -18,8 +18,18 @@ class RentedMovieController extends MvcController{
 	
 	function addAction(){
 		$data = $this->params;
-		$model = new ClientHasMovie();
-		$model->setAttributes($data);
+		$movies = json_decode($data["movies"],true);
+		$today = date('Y-m-d');
+		foreach ($movies as $movie){
+			$model = new ClientHasMovie();
+			$model->setAttributes($data);
+			$model->movieId = $movie["id"];
+			$model->date = $today;
+			$model->isRented = true;
+			$model->rentedUnits = $movie["numberMovie"];
+			$model->total = $movie["numberMovie"];
+			$model->addMovieRented();
+		}
 		
 		//$model->
 	}

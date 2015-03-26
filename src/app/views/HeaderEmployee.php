@@ -5,5 +5,5 @@
 	<a href="#" class="nav-button">Catalogo de clientes</a>
 	<a href="#" class="nav-button">Corte de caja del d&iacute;a</a>
 	<a href="../RentedMovie/index" class="nav-button">Rentar pelicula</a>
-	<a href="../../services/LoginService.php?logOut" class="exit-button right"><span class="icon fa-off"></span></a>
+	<a href="../LogIn/logOut" class="exit-button right"><span class="icon fa-off"></span></a>
 </div>

@@ -73,7 +73,6 @@ class ClientHasMovie extends ActiveRecord{
     }
     
     public function addMovieRented(){
-    	
     	$this->save();
     }
 
