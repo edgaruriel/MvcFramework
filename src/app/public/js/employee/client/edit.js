@@ -4,7 +4,7 @@ window.onload = function() {
 
 function validation(){
     var name = document.getElementById("name").value;
-    var last_name = document.getElementById("last_name").value;
+    var last_name = document.getElementById("lastName").value;
     var email = document.getElementById("email").value;
     var ife = document.getElementById("ife").value;
 

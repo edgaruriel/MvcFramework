@@ -18,4 +18,12 @@ class Client extends ActiveRecord{
 		return $clients;
 	}
 	
+	public function add(){
+		$id = $this->save();
+	}
+
+	public function update(){
+		$this->save();
+	}
+	
 }
