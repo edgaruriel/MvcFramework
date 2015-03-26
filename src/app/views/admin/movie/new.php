@@ -4,8 +4,8 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Pelicula nueva</title>
-    <script src="../../../../public/js/admin/movie/new.js"></script>
-    <link rel="stylesheet" type="text/css" href="../../../../public/css/main.css" media="screen" />
+    <script src="../src/app/public/js/admin/movie/new.js"></script>
+    <link rel="stylesheet" type="text/css" href="../src/app/public/css/main.css" media="screen" />
 </head>
 <body>
 

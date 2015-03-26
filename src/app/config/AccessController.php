@@ -63,7 +63,7 @@ class AccessController{
 		return Array(
 				"host" => "localhost",
 				"username" => "root",
-				"password" => "",
+				"password" => "root",
 				"schema" => "mvc",
 				"dbtype"=> "mysql"
 				);
