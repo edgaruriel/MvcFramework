@@ -3,6 +3,7 @@ var ADD_MOVIES = new Array();
 var ajax = {};
 window.onload = function() {
 	document.getElementById("numberMovie").onkeypress= function(){return justNumbers(event)};
+	 document.getElementById("btnNew").onclick = function(){return rentedMovies()};
 	MOVIES = JSON.parse(document.getElementById("allMovie").value);
 }
 
@@ -106,8 +107,8 @@ function validateMovie(idSelected,amountMovie){
 		if(movieAux.id == idSelected){
 			var totalUnits = parseInt(movieAux.totalUnits);
 			var rentedUnits = parseInt(movieAux.rentedUnits);
-			var existUnits = totalUnits - rentedUnits
-			if(amountMovie <= existUnits){
+			var existUnits = totalUnits - rentedUnits;
+			if(amountMovie <= existUnits && existUnits != 0 && amountMovie != 0){
 				flag = true;
 			}else{
 				alert("El n�mero de peliculas disponibles para este titulo es: "+existUnits);
@@ -121,34 +122,30 @@ function validateMovie(idSelected,amountMovie){
 	return flag;
 }
 
-function sendAjaxToAddRented(){
-	var idClient = document.getElementById("client").value;
-	var date = document.getElementById("devolutionDate").value;
-			ajax.post('../RentedMovie/add', {movies: JSON.stringify(ADD_MOVIES),clientId:idClient, devolutionDate:date}, function(data) {
-				if(data == '1'){
-					location.href ="../RentedMovie/index";
-				}else{
-					alert("ERROR: un problema con el servidor");
-				}
-			});
-}
-
 function rentedMovies(){
-	var idClient = document.getElementById("client").value;
+	var flag = true;
+	var idClient = document.getElementById("clientId").value;
 	if(idClient != ""){
 		var date = document.getElementById("devolutionDate").value;
 		if(date != ""){
 			if(ADD_MOVIES.length > 0){
-				sendAjaxToAddRented();
+				//sendAjaxToAddRented();
+				var movies = document.getElementById("movies");
+				var json = JSON.stringify(ADD_MOVIES);
+				movies.value = json;
 			}else{
+				flag = false;
 				alert("Agregue al menos una pelicula");
 			}
 		}else{
+			flag = false;
 			alert("Seleccione una fecha para la devolucion");
 		}
 	}else{
+		flag = false;
 		alert("Seleccione un cliente");
 	}
+	return flag;
 }
 
 var Movie = function(){
@@ -168,56 +165,3 @@ function justNumbers(e)
 	return /\d/.test(String.fromCharCode(keynum));
 }
 
-
-ajax.x = function() {
-    if (typeof XMLHttpRequest !== 'undefined') {
-        return new XMLHttpRequest();  
-    }
-    var versions = [
-        "MSXML2.XmlHttp.5.0",   
-        "MSXML2.XmlHttp.4.0",  
-        "MSXML2.XmlHttp.3.0",   
-        "MSXML2.XmlHttp.2.0",  
-        "Microsoft.XmlHttp"
-    ];
-
-    var xhr;
-    for(var i = 0; i < versions.length; i++) {  
-        try {  
-            xhr = new ActiveXObject(versions[i]);  
-            break;  
-        } catch (e) {
-        }  
-    }
-    return xhr;
-};
-
-ajax.send = function(url, callback, method, data, sync) {
-    var x = ajax.x();
-    x.open(method, url, sync);
-    x.onreadystatechange = function() {
-        if (x.readyState == 4) {
-            callback(x.responseText)
-        }
-    };
-    if (method == 'POST') {
-        x.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    }
-    x.send(data)
-};
-
-ajax.get = function(url, data, callback, sync) {
-    var query = [];
-    for (var key in data) {
-        query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
-    }
-    ajax.send(url + '?' + query.join('&'), callback, 'GET', null, sync)
-};
-
-ajax.post = function(url, data, callback, sync) {
-    var query = [];
-    for (var key in data) {
-        query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
-    }
-    ajax.send(url, callback, 'POST', query.join('&'), sync)
-};

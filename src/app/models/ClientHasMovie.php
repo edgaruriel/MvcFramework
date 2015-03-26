@@ -75,5 +75,21 @@ class ClientHasMovie extends ActiveRecord{
     public function addMovieRented(){
     	$this->save();
     }
+    
+    public function update(){
+    	$this->save();
+    }
+    
+    public function findOneById($id){
+    	$this->find(" id=".$id);
+    	
+    	$client = new Client();
+    	$client->findOneById($this->clientId);
+    	$this->setClient($client);
+    	
+    	$movie = new Movie();
+    	$movie->finOneById($this->movieId);
+    	$this->setMovie($movie);
+    }
 
 }

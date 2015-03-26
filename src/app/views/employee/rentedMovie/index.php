@@ -26,10 +26,10 @@
                     	<td><?php echo $rented->id;?></td>
                     	<td><?php echo $rented->getMovie()->title;?></td>
                     	<td><?php echo $rented->getClient()->name." ".$rented->getClient()->lastName;?></td>
-                    	<td><?php echo $rented->amount;?></td>
+                    	<td><?php echo $rented->rentedUnits;?></td>
                     	<td><?php echo $rented->total;?></td>
-                    	<td><?php echo $rented->dateRented;?></td>
-                    	<td><?php echo $rented->dateDevolution;?></td>
+                    	<td><?php echo $rented->date;?></td>
+                    	<td><?php echo $rented->devolutionDate;?></td>
                     	<td>
                     	<?php if($rented->isRented == ClientHasMovie::$statusArray["RENTED"]):?>
                     	<strong class="rentado">RENTADO</strong>
@@ -39,7 +39,7 @@
                     	</td>
                     	<td>
                     	<?php if($rented->isRented == ClientHasMovie::$statusArray["RENTED"]):?>
-                    	 <a href="../RentedMovie/returnRented?id=<?php echo $rented->id;?> " class="s-button verde">Devolver</a>
+                    	 <a href="../RentedMovie/returnMovie?id=<?php echo $rented->id;?> " class="s-button verde">Devolver</a>
                     		<!-- <input type="hidden" id="idRented" name="idRented" value="<?php //echo $rented->id;?>"/>  -->
                     		<!-- <button type="submit" class="verde">Devolver</button>  -->
                     	<?php endif;?>

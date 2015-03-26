@@ -29,8 +29,31 @@ class RentedMovieController extends MvcController{
 			$model->rentedUnits = $movie["numberMovie"];
 			$model->total = $movie["numberMovie"];
 			$model->addMovieRented();
+			
+			$movieModel = new Movie();
+			$movieModel->finOneById($movie["id"]);
+			$movieModel->rentedUnits +=  $movie["numberMovie"];
+			$movieModel->update();
+			
 		}
+		$this->redirect("../RentedMovie/index");
+	}
+	
+	function returnMovieAction(){
+		$data = $this->params;
+		$rented = new ClientHasMovie();
+		$rented->findOneById($data["id"]);
 		
-		//$model->
+		$rented->isRented = false;
+		
+		$movie = $rented->getMovie();
+		if(($movie->rentedUnits - $rented->rentedUnits) < 0){
+			$movie->rentedUnits = 0;
+		}else{
+			$movie->rentedUnits = $movie->rentedUnits - $rented->rentedUnits;
+		}
+		$rented->update();
+		$movie->update();
+		$this->redirect("../RentedMovie/index");
 	}
 }

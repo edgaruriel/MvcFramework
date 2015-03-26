@@ -2,10 +2,11 @@
 ?>
 <script src="../src/app/public/js/employee/rentedMovie/new.js"></script>
 <div class="container center">
+ <form action="../RentedMovie/add" id="form" name="form" method="post" class="form-group">
 	<div class="header">Nueva Renta</div>
 	<div class="form-group">
 		<label><span>Cliente:</span></label>
-		<select id="client" name="client">
+		<select id="clientId" name="clientId">
 			<option value="">Seleccione un cliente</option>
 			<?php foreach ($allClients as $client):?>
 			<option value="<?php echo $client->id;?>"><?php echo $client->name;?></option>
@@ -30,7 +31,7 @@
 		<label><span>N&uacute;mero de peliculas a rentar:</span></label>
 		<input type="number" id="numberMovie" name="number" />
 
-		<button onclick="addMovie();" class="verde"><span class="icon fa-plus"></span>Agregar pelicula</button>
+		<button type="button" onclick="addMovie();" class="verde"><span class="icon fa-plus"></span>Agregar pelicula</button>
 	</div>
 		<hr>
 		<h3>Lista de peliculas agregadas</h3>
@@ -47,8 +48,9 @@
 				
 			</tbody>
 		</table>
-	
-	<button onclick="rentedMovies();" class="verde right">Rentar</button>
+		<input type="hidden" id="movies" name="movies" value=""/>
+	<button type="submit" class="verde right" id="btnNew" name="btnNew">Rentar</button>
+	</form>
 	<a id="btn_cancelar" value="Cancelar" href="../RentedMovie/index" class="button azul left"><span class="icon fa-times"></span>Cancelar</a>
 	<br><br><br>
 </div>
