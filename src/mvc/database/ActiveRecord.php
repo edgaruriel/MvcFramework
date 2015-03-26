@@ -24,15 +24,16 @@ class ActiveRecord {
       
     }
 
-    protected function getMetaData(){
-        $result = DBConnection::getInstance()->getCommand()->execute("SHOW FULL COLUMNS FROM ".$this->getTableName());
-        foreach ($result as $row){
-        	$field = $this->changeNameField($row["Field"]);
-        	$this->columns[$field] = null;
-        	$this->columnsDB[$row["Field"]] = null;
-        	if($row["Key"] === "PRI"){
-        		$this->primaryKey = $row["Field"];
-        	}
+    protected function getMetaData()
+    {
+        $result = DBConnection::getInstance()->getCommand()->execute("SHOW FULL COLUMNS FROM " . $this->getTableName());
+        foreach ($result as $row) {
+            $field = $this->changeNameField($row["Field"]);
+            $this->columns[$field] = null;
+            $this->columnsDB[$row["Field"]] = null;
+            if ($row["Key"] === "PRI") {
+                $this->primaryKey = $row["Field"];
+            }
         }
     }
     
@@ -61,6 +62,15 @@ class ActiveRecord {
     public function findAll($conditions = ''){
     	$result = DBConnection::getInstance()->getCommand()->select($this->columnsDB,$this->getTableName(),$conditions);
     	return $result;
+    }
+
+    public function executeQuery($query){
+        $result = DBConnection::getInstance()->getCommand()->execute($query);
+        $data = array();
+        foreach ($result as $key => $row) {
+           array_push($data,$row);
+        }
+        return $data;
     }
 
     public function getAttributes($attributesArray){

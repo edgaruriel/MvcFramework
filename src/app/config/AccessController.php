@@ -41,7 +41,7 @@ class AccessController{
 																	'updateUser'
 																),
                                                         'Movie'=>Array('*'),
-                                                        'Cash'=>Array('*'),
+                                                        'Cash'=>Array('cashAdmin'),
 														'Index'=>Array('indexAdmin')
 									),
 							TypeUser::$typeUserArray["EMPLOYEE"]=>Array(
@@ -53,6 +53,7 @@ class AccessController{
 																	'editClient',
 																	'updateClient'
 																),
+                                                        'Cash'=>Array('cashEmployee'),
 														'Index'=>Array('indexEmployee'),
 														'RentedMovie'=>Array('*')
 									)

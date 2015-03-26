@@ -2,82 +2,57 @@
 
 class CashController extends MvcController{
 
-    function indexAction(){
+    function cashAdminAction(){
         $model = new ClientHasMovie();
-        $model->findAll();
-    }
-
-    function getMoviesRented()
-    {
-        $arrayIdMovies = array();
-        //Conexion con el servidor de base de datos
-        $pconexion = abrirConexion();
-        //Seleccion de la base de datos
-        seleccionarBaseDatos($pconexion);
-        //Construccion de la sentencia SQL
         $date = Date("Y-m-d");
-        $cquery = "SELECT client_has_movie.movie_id AS idMovie";
-        $cquery .= " FROM client_has_movie";
-        $cquery .= " WHERE DATE_FORMAT(date, '%Y-%m-%d') = '".$date."'";
-        //Se ejecuta la sentencia SQL
-        $lresult = mysqli_query($pconexion, $cquery);
+        $registers = $model->findAll("DATE_FORMAT(date, '%Y-%m-%d') = '".$date."'");
+        $arrayIdMovies = array();
+        $arrayMovies = array();
 
-        if (!$lresult) {
-            $cerror = "No fue posible recuperar la informacion de la base de datos.<br>";
-            $cerror .= "SQL: $cquery <br>";
-            $cerror .= "Descripcion: " . mysqli_connect_error($pconexion);
-            die($cerror);
-        } else {
-            //Verifica que la consulta haya devuelto por lo menos un registro
-            if (mysqli_num_rows($lresult) > 0) {
-                while ($adatos = mysqli_fetch_array($lresult, MYSQLI_BOTH)) {
-                    if(!in_array($adatos["idMovie"],$arrayIdMovies)){
-                        array_push($arrayIdMovies,$adatos["idMovie"]);
-                    }
-                }
+        foreach($registers as $register){
+            if(!in_array($register["movie_id"],$arrayIdMovies)){
+                array_push($arrayIdMovies,$register["movie_id"]);
             }
         }
-        mysqli_free_result($lresult);
 
-        cerrarConexion($pconexion);
-        $array = $this->getMoviesAndRentedUnits($arrayIdMovies);
-        return $array;
+        foreach($arrayIdMovies as $id){
+            $cquery = "SELECT SUM(client_has_movie.rented_units) AS total FROM client_has_movie WHERE movie_id=".$id." AND DATE_FORMAT(date, '%Y-%m-%d') = '".$date."'";
+            $result = $model->executeQuery($cquery);
+
+            $movie = new Movie();
+            $movie->finOneById($id);
+            foreach($result as $row){
+                array_push($arrayMovies,array("units"=>$row["total"],"movie"=>$movie));
+            }
+        }
+
+        $this->render("index",array('arrayMovies' => $arrayMovies), "HeaderAdmin", "admin");
     }
 
-    function getMoviesAndRentedUnits($idsMovies){
+    function cashEmployeeAction(){
+        $model = new ClientHasMovie();
+        $date = Date("Y-m-d");
+        $registers = $model->findAll("DATE_FORMAT(date, '%Y-%m-%d') = '".$date."'");
+        $arrayIdMovies = array();
+        $arrayMovies = array();
 
-        $controller = new MovieController();
-        $array = array();
-        //Conexion con el servidor de base de datos
-        $pconexion = abrirConexion();
-        //Seleccion de la base de datos
-        seleccionarBaseDatos($pconexion);
-        //Construccion de la sentencia SQL
-
-        foreach($idsMovies as $idMovie) {
-            $date = Date("Y-m-d");
-            $cquery = "SELECT SUM(client_has_movie.rented_units) AS total FROM client_has_movie WHERE movie_id=".$idMovie;
-            $cquery .= " AND DATE_FORMAT(date, '%Y-%m-%d') = '".$date."'";
-            //Se ejecuta la sentencia SQL
-            $lresult = mysqli_query($pconexion, $cquery);
-
-            if (!$lresult) {
-                $cerror = "No fue posible recuperar la informacion de la base de datos.<br>";
-                $cerror .= "SQL: $cquery <br>";
-                $cerror .= "Descripcion: " . mysqli_connect_error($pconexion);
-                die($cerror);
-            } else {
-                //Verifica que la consulta haya devuelto por lo menos un registro
-                if (mysqli_num_rows($lresult) > 0) {
-                    while ($adatos = mysqli_fetch_array($lresult, MYSQLI_BOTH)) {
-                            array_push($array,array("units"=>$adatos["total"],"movie"=>$controller->findOne($idMovie)));
-                    }
-                }
+        foreach($registers as $register){
+            if(!in_array($register["movie_id"],$arrayIdMovies)){
+                array_push($arrayIdMovies,$register["movie_id"]);
             }
-            mysqli_free_result($lresult);
         }
 
-        cerrarConexion($pconexion);
-        return $array;
+        foreach($arrayIdMovies as $id){
+            $cquery = "SELECT SUM(client_has_movie.rented_units) AS total FROM client_has_movie WHERE movie_id=".$id." AND DATE_FORMAT(date, '%Y-%m-%d') = '".$date."'";
+            $result = $model->executeQuery($cquery);
+
+            $movie = new Movie();
+            $movie->finOneById($id);
+            foreach($result as $row){
+                array_push($arrayMovies,array("units"=>$row["total"],"movie"=>$movie));
+            }
+        }
+
+        $this->render("index",array('arrayMovies' => $arrayMovies), "HeaderEmployee", "employee");
     }
 } 
