@@ -6,16 +6,18 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Editar pelicula</title>
-    <script src="../../../../public/js/admin/movie/edit.js"></script>
-    <link rel="stylesheet" type="text/css" href="../../../../public/css/main.css" media="screen" />
+    <script src="../src/app/public/js/admin/movie/edit.js"></script>
+    <link rel="stylesheet" type="text/css" href="../src/app/public/css/main.css" media="screen" />
 </head>
 <body>
 
    <div class="container center">
    <div class="header">Editar Pelicula: <?php echo $movie->title;?></div>
    		<?php if($movie != null):?>
-   			<form action="../Movie/addMovie" id="form" name="form" method="post" enctype="multipart/form-data"  class="form-group">
+   			<form action="../Movie/updateMovie" id="form" name="form" method="post" enctype="multipart/form-data"  class="form-group">
    					<input type="hidden" id="id" name="id" value="<?php echo $movie->id;?>"/>
+                    <input type="hidden" id="status" name="status" value="1"/>
+                    <input type="hidden" id="rentedUnits" name="rentedUnits" value="<?php echo $movie->rentedUnits;?>"/>
                     <label ><span>Titulo:</span> </label><input type="text" id="title" name="title" value="<?php echo $movie->title;?>"/>
 
                     <label ><span>Formato: </span></label><input type="text" id="format" name="format" value="<?php echo $movie->format;?>"/>

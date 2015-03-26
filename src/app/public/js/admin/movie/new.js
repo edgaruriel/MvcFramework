@@ -11,10 +11,9 @@ function validation(){
 	var year = document.getElementById("year").value;
 	var price = document.getElementById("price").value;
 	var code = document.getElementById("code").value;
-	var gender = document.getElementById("gender").value;
-	var photo = document.getElementById("file_img").value;
+	var gender = document.getElementById("genderId").value;
 	
-	if(title == "" || format=="" || totalUnits=="" || year=="" || price=="" || code=="" || gender=="" || photo==""){
+	if(title == "" || format=="" || totalUnits=="" || year=="" || price=="" || code=="" || gender==""){
 		alert("Todos los campos son obligatorios");
 		return false;
 	}else{
