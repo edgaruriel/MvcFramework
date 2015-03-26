@@ -6,9 +6,9 @@ function validation(){
 	var username = document.getElementById("username").value;
 	var password = document.getElementById("password").value;
     var name = document.getElementById("name").value;
-    var last_name = document.getElementById("last_name").value;
+    var last_name = document.getElementById("lastName").value;
     var email = document.getElementById("email").value;
-    var type = document.getElementById("tipo").value;
+    var type = document.getElementById("typeUserId").value;
 
     if(username=="" || password=="" || name=="" || last_name=="" || email=="" || type==""){
         alert("No pueden haber campos vacios");

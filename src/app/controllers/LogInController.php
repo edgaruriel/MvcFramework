@@ -2,8 +2,6 @@
 class LogInController extends MvcController{
 	
 	public function logInAction(){
-// 		$login = new LogIn();
-// 		$login->initLogIn();
 		$this->render("logIn",array());
 	}
 	
@@ -15,10 +13,10 @@ class LogInController extends MvcController{
 		if(Authentication::getInstance()->isLogged()){
 			//$url = "../User/listUser";
 			$url = "";
-			if($modelUser->getTypeUser()->id == TypeUser::$typeUserArray["admin"]){
+			if($modelUser->getTypeUser()->id == TypeUser::$typeUserArray["ADMIN"]){
 				$url = "../Index/indexAdmin";
 				//$this->redirect($url);
-			}else if($modelUser->getTypeUser()->id == TypeUser::$typeUserArray["employee"]){
+			}else if($modelUser->getTypeUser()->id == TypeUser::$typeUserArray["EMPLOYEE"]){
 				$url = "../Index/indexEmployee";
 			}else{
 				$url = "../LogIn/logOut";

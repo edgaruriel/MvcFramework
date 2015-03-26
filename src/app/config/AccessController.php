@@ -31,7 +31,7 @@ class AccessController{
 									
 						),
 				'authorized'=>Array(//type users
-							TypeUser::$typeUserArray["admin"]=>Array( //controller
+							TypeUser::$typeUserArray["ADMIN"]=>Array( //controller
 														'User'=>Array(//actions
 																	'newUser',
 																	'addUser',
@@ -43,6 +43,10 @@ class AccessController{
                                                         'Movie'=>Array('*'),
                                                         'Cash'=>Array('*'),
 														'Index'=>Array('indexAdmin')
+									),
+							TypeUser::$typeUserArray["EMPLOYEE"]=>Array(
+														'Index'=>Array('indexEmployee'),
+														'RentedMovie'=>Array('*')
 									)
 						));
 	}

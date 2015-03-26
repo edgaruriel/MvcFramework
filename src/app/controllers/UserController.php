@@ -3,21 +3,22 @@ class UserController extends MvcController{
 	
 	function listUserAction(){
  		$modelUser = new User();
- 		//$UserList = new UserIndex();
  		$userArray = $modelUser->findAllUser();
         $this->render("index",array('users' => $userArray),"HeaderAdmin", "admin");
-		//$UserList->listUser($userArray);
 	}
 	
 	function newUserAction(){
-		$UserNew = new UserNew();
-		$UserNew->newUser();
+		$typeUser = new TypeUser();
+		$typeUserArray = $typeUser->findAllTypeUser();
+		$this->render("new",array('types' => $typeUserArray),"HeaderAdmin", "admin");
 	}
 
 	function addUserAction(){
 		$data = $this->params;
 		$modelUser = new User();
 		$modelUser->setAttributes($data);
+		$modelUser->status = true;
+		$modelUser->password = sha1($modelUser->password);
 		$modelUser->add();
 		$this->redirect("../User/listUser");
 	}
@@ -25,8 +26,10 @@ class UserController extends MvcController{
 	function deleteUserAction(){
 		$data = $this->params;
 		$modelUser = new User();
-		$modelUser->setAttributes($data);
-		$modelUser->deleteOneByPrimaryKey();
+		$modelUser->finOneById($data["id"]);
+		$modelUser->status = false;
+		$modelUser->update();
+		//$modelUser->deleteOneByPrimaryKey();
 		$this->redirect("../User/listUser");
 	}
 	
@@ -34,14 +37,23 @@ class UserController extends MvcController{
 		$data = $this->params;
 		$modelUser = new User();
 		$modelUser->finOneById($data["id"]);
-		$userEdit = new UserEdit();
-		$userEdit->edit($modelUser);
+		$typeUser = new TypeUser();
+		$typeUserArray = $typeUser->findAllTypeUser();
+		$this->render("edit",array('employee' => $modelUser, 'types'=>$typeUserArray),"HeaderAdmin", "admin");
 	}
 	
 	function updateUserAction(){
 		$data = $this->params;
 		$modelUser = new User();
+		$modelUser->finOneById($data["id"]);
+		if($data["password"] != ""){
 		$modelUser->setAttributes($data);
+		$modelUser->password = sha1($modelUser->password);
+		}else{
+		$password = $modelUser->password;
+		$modelUser->setAttributes($data);
+		$modelUser->password = $password;
+		}
 		
 		$modelUser->update();
 		$this->redirect("../User/listUser");

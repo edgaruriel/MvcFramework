@@ -1,13 +1,7 @@
 <?php
 class User extends ActiveRecord{
-/*	public static $ID = 0;
-	public static  $FIRST_NAME = 1;
-	public static  $LAST_NAME = 2;
-	public static  $USER = 3;
-	public static  $PASSWORD = 4;
-	public static  $TYPE_USER = 5;
-*/
 
+	public static $statusArray = Array('ACTIVE'=>1, 'NOT_ACTIVE'=>0);
 	public $typeUser = null;
 	
 	/**
@@ -38,11 +32,14 @@ class User extends ActiveRecord{
 	
 	public function finOneById($id){
 		$this->find("id =".$id);
+		$typeUser = new TypeUser();
+		$typeUser->finOneById($this->typeUserId);
+		$this->setTypeUser($typeUser);
 	}
 	
 	public function findAllUser(){
 		$users = Array();
-		$rows = $this->findAll();
+		$rows = $this->findAll("status = ".self::$statusArray["ACTIVE"]);
 		foreach ($rows as $row){
 			$model = new User();
 			$model->setAttributes($row);

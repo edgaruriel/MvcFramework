@@ -1,6 +1,6 @@
 <?php
 class Movie extends ActiveRecord{
-	public static $statusArray = Array('activo'=>1,'borrado'=>0);
+	public static $statusArray = Array('ACTIVE'=>1,'NOT_ACTIVE'=>0);
 
     public $gender = null;
 
@@ -41,7 +41,7 @@ class Movie extends ActiveRecord{
 
     public function findAllMovies(){
         $movies = Array();
-        $rows = $this->findAll("status = 1");
+        $rows = $this->findAll("status = ".self::$statusArray["ACTIVE"]);
         foreach ($rows as $row){
             $model = new Movie();
             $model->setAttributes($row);

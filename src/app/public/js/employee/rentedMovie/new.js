@@ -22,11 +22,11 @@ var numberMovie =	document.getElementById("numberMovie").value;
 				//index--;
 			}
 			ADD_MOVIES[index] = newMovie;
-			console.log("Index a buscar "+index+" cantidad: "+ADD_MOVIES.length);
+			//console.log("Index a buscar "+index+" cantidad: "+ADD_MOVIES.length);
 			addRowToTableMovies(index);
 			refreshAddMovie();
 		}else{
-			console.log("ERROR");
+			//console.log("ERROR");
 		}
 	}else{
 		alert("Seleccione una pelicula y un numero de peliculas valido");
@@ -57,15 +57,23 @@ function deleteMovie(index){
 	for(i = 0; i<ADD_MOVIES.length; i++){
 		addRowToTableMovies(i);
 	}
-	console.log("Borro indice: "+index+" queda: "+ADD_MOVIES.length);
+	//console.log("Borro indice: "+index+" queda: "+ADD_MOVIES.length);
 }
 
 function refreshSelectMovie(index){
 	var movie = ADD_MOVIES[index];
+	//console.log(movie);
 	var x = document.getElementById("movie");
     var option = document.createElement("option");
-    option.text = movie.title+" ("+movie.year+")";
-	option.value = movie.id;
+    var i;
+    for(i=0;i<MOVIES.length;i++){
+    	var movieAux = MOVIES[i];
+    	if(movie.id == movieAux.id){
+    		 option.text = movieAux.title+" ("+movieAux.year+") Disponibles "+(parseInt(movieAux.totalUnits - movieAux.rentedUnits));
+    		 option.value = movieAux.id;
+    		 break;
+    	}
+    }
     x.add(option);
 }
 
@@ -116,9 +124,9 @@ function validateMovie(idSelected,amountMovie){
 function sendAjaxToAddRented(){
 	var idClient = document.getElementById("client").value;
 	var date = document.getElementById("devolutionDate").value;
-			ajax.post('../../../services/RentedMovieService.php', {movies: JSON.stringify(ADD_MOVIES),idClient:idClient, date:date,newBtn:"1"}, function(data) {
+			ajax.post('../RentedMovie/add', {movies: JSON.stringify(ADD_MOVIES),clientId:idClient, devolutionDate:date}, function(data) {
 				if(data == '1'){
-					location.href ="index.php";
+					location.href ="../RentedMovie/index";
 				}else{
 					alert("ERROR: un problema con el servidor");
 				}

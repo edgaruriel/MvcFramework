@@ -1,7 +1,39 @@
 <?php
 class ClientHasMovie extends ActiveRecord{
+	public static $statusArray = Array('RENTED'=>1, 'NOT_RENTED'=>0);
+	public $client = null;
+	public $movie = null;
+	
 
-    public function findAll(){
+    /**
+	 * @return the $client
+	 */
+	public function getClient() {
+		return $this->client;
+	}
+
+	/**
+	 * @return the $movie
+	 */
+	public function getMovie() {
+		return $this->movie;
+	}
+
+	/**
+	 * @param field_type $client
+	 */
+	public function setClient($client) {
+		$this->client = $client;
+	}
+
+	/**
+	 * @param field_type $movie
+	 */
+	public function setMovie($movie) {
+		$this->movie = $movie;
+	}
+
+	public function findAllMovieToday(){
         $date = Date("Y-m-d");
         $arrayIdMovies = array();
         $rows = $this->findAll("DATE_FORMAT(date, '%Y-%m-%d') = '".$date."'");
@@ -18,6 +50,31 @@ class ClientHasMovie extends ActiveRecord{
         print_r($arrayIdMovies);
         exit();
         return $arrayIdMovies;
+    }
+    
+    public function findAllMovieRented(){
+    	$rentedArray = Array();
+    	$rows = $this->findAll();
+    	foreach ($rows as $row){
+    		$model = new ClientHasMovie();
+    		$model->setAttributes($row);
+    		
+    		$client = new Client();
+    		$client->findOneById($model->clientId);
+    		$model->setClient($client);
+    		
+    		$movie = new Movie();
+    		$movie->finOneById($model->movieId);
+    		$model->setMovie($movie);
+    		
+    		array_push($rentedArray, $model);
+    	}
+    	return $rentedArray;
+    }
+    
+    public function addMovieRented(){
+    	
+    	$this->save();
     }
 
 }

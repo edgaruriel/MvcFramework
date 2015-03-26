@@ -37,8 +37,8 @@
                             ?>
                             </td>
                             <td>
-                                <a href="edit.php?idEmployee=<?php echo $employee->id;?> " class="s-button verde"><span class="s-icon fa-edit"></span></a>
-                                <a href="../../../services/EmployeeService.php?action=delete&idEmployee=<?php echo $employee->id;?>" class="s-button rojo"><span class="s-icon fa-trash"></span></a>
+                                <a href="../User/editUser?id=<?php echo $employee->id;?> " class="s-button verde"><span class="s-icon fa-edit"></span></a>
+                                <a href="../User/deleteUser?id=<?php echo $employee->id;?>" class="s-button rojo"><span class="s-icon fa-trash"></span></a>
                             </td>
                         </tr>
                     <?php endforeach;?>
