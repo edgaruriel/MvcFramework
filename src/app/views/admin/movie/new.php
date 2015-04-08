@@ -37,7 +37,7 @@
 
                     <label ><span>C&oacute;digo: </span></label><input type="text" id="code" name="code" value="<?php echo (isset($_POST["code"]))? $_POST["title"]: ""?>"/>
 
-                    <label ><span>Genero: </span></label>
+                    <label ><span>G&eacute;nero: </span></label>
 					<select id="genderId" name="genderId">
                     <option value="">Seleccione un g&eacute;nero</option>
                     <?php foreach ($genders as $gender):?>

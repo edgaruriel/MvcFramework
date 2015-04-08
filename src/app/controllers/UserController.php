@@ -26,7 +26,7 @@ class UserController extends MvcController{
 	function deleteUserAction(){
 		$data = $this->params;
 		$modelUser = new User();
-		$modelUser->finOneById($data["id"]);
+		$modelUser->findOneById($data["id"]);
 		$modelUser->status = false;
 		$modelUser->update();
 		//$modelUser->deleteOneByPrimaryKey();
@@ -36,7 +36,7 @@ class UserController extends MvcController{
 	function editUserAction(){
 		$data = $this->params;
 		$modelUser = new User();
-		$modelUser->finOneById($data["id"]);
+		$modelUser->findOneById($data["id"]);
 		$typeUser = new TypeUser();
 		$typeUserArray = $typeUser->findAllTypeUser();
 		$this->render("edit",array('employee' => $modelUser, 'types'=>$typeUserArray),"HeaderAdmin", "admin");
@@ -45,7 +45,7 @@ class UserController extends MvcController{
 	function updateUserAction(){
 		$data = $this->params;
 		$modelUser = new User();
-		$modelUser->finOneById($data["id"]);
+		$modelUser->findOneById($data["id"]);
 		if($data["password"] != ""){
 		$modelUser->setAttributes($data);
 		$modelUser->password = sha1($modelUser->password);

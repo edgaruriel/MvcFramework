@@ -30,7 +30,7 @@ class User extends ActiveRecord{
 		$this->save();
 	}
 	
-	public function finOneById($id){
+	public function findOneById($id){
 		$this->find("id =".$id);
 		$typeUser = new TypeUser();
 		$typeUser->finOneById($this->typeUserId);

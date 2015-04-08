@@ -29,7 +29,7 @@
 		</select>
 		<input type="hidden" id="allMovie" name="allMovie" value='<?php echo json_encode($arrayAux);?>'/>
 		<label><span>N&uacute;mero de peliculas a rentar:</span></label>
-		<input type="number" id="numberMovie" name="number" />
+		<input type="number" id="numberMovie" name="number" min="1" />
 
 		<button type="button" onclick="addMovie();" class="verde"><span class="icon fa-plus"></span>Agregar pelicula</button>
 	</div>
